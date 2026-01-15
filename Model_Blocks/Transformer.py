@@ -16,12 +16,12 @@ class Transformer(nn.Module):
     def __init__(self,
         length_vocab_entry,
         length_vocab_target,
-        embedding_size = 512,
+        embedding_size = 128,
         dropout_rate = 0.1,
-        head_size = 4,
-        num_heads = 2,
-        n_encoder_blocks = 1,
-        n_decoder_blocks = 1,
+        head_size = 64,
+        num_heads = 4,
+        n_encoder_blocks = 4,
+        n_decoder_blocks = 4,
         max_context_size = 64
         ):
         super().__init__()

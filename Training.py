@@ -46,7 +46,7 @@ def train_model(model,
             preds = output.argmax(dim=-1)  
             correct = (preds == y[:, 1:]).float() * non_padding_fr.float()
             accuracy += correct.sum().item() / non_padding_fr.sum().item()
-            if (i+1) % 1 == 0:
+            if (i+1) % 100 == 0:
                 print(f'  Batch {i+1}/{len(train_loader)}, Loss: {loss.item():.4f}')
         train_loss /= len(train_loader)
         accuracy /= len(train_loader)
