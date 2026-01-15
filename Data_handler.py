@@ -50,11 +50,11 @@ class VocabDataset(TensorDataset):
 
         return torch.tensor(tokens_en, dtype=torch.long), torch.tensor(tokens_fr, dtype=torch.long)
 
-    def untokenize(tensor, vec):
-        # input is embedded tensor
-        inv_vocab = {v: k for k, v in vec.vocabulary_.items()}
-        sentences = []
-        for seq in tensor:
-            words = [inv_vocab[token.item()] for token in seq if token.item() in inv_vocab]
-            sentences.append(' '.join(words))
-        return sentences
+def untokenize(tensor, vec):
+    # input is embedded tensor
+    inv_vocab = {v: k for k, v in vec.vocabulary_.items()}
+    sentences = []
+    for seq in tensor:
+        words = [inv_vocab[token.item()] for token in seq if token.item() in inv_vocab]
+        sentences.append(' '.join(words))
+    return sentences

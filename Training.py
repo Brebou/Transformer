@@ -77,6 +77,7 @@ def train_model(model,
         test_losses.append(test_loss)
         test_acc.append(accuracy)
         print(f'Epoch {epoch+1}/{num_epochs}, Test Loss: {test_loss:.4f}, Test Acc: {accuracy:.4f}')
-
+        if (epoch + 1) % 1== 0:  # Sauvegarder tous les 5 epochs
+           torch.save(model.state_dict(), f'model_temp_training.pt')
     print(f'Total Training Time: {time_spent:.2f}s')
     return train_losses, test_losses, train_acc, test_acc
