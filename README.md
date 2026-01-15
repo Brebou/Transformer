@@ -10,3 +10,10 @@ Training is handled in Training.py,
 
 The jupyter notebook test_model.ipynb is provided for testing and evaluating the trained model.
 It is elementary but allows to train/test the model easily.
+
+I used LLM for basic questions about specific funtcions (like dataframes that were new to me).
+Also to track one stupid constant error after 1h debugging and not finding the issue.
+
+Thanks JJ for answering my stupid questions too !
+
+Git link: https://github.com/Brebou/Transformer.git
