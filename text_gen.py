@@ -12,7 +12,7 @@ def translate_sentence(model, vectorizer_input, vectorizer_output, sentence,max_
         input_indices = input_indices[:max_len_input]
     input_tensor = torch.LongTensor(input_indices).unsqueeze(0).to(device)  
     mask = (input_tensor == vectorizer_input.vocabulary_['PPPading']).unsqueeze(1)
-    mask = mask.float().masked_fill(mask == 1, float('-inf'))
+    mask = mask.float().masked_fill(mask == 1, float('-inf')).to(device)
 
     y = torch.LongTensor([vectorizer_output.vocabulary_['ddd']]).unsqueeze(0).to(device)    
     for _ in range(max_len_gen - 1):
@@ -24,7 +24,7 @@ def translate_sentence(model, vectorizer_input, vectorizer_output, sentence,max_
             break
 
     output_indices = y.squeeze(0).tolist()
-    output_sentence = untokenize(torch.tensor([output_indices]), vectorizer_output)[0]
+    output_sentence = untokenize(torch.tensor([output_indices]).to(device), vectorizer_output)[0]
     print("Input Sentence: ", sentence)
     print("Translated Sentence: ", output_sentence)
     return output_sentence
