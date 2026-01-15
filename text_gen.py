@@ -6,7 +6,15 @@ def translate_sentence(model, vectorizer_input, vectorizer_output, sentence,max_
     model.eval()
     # using vec to tokenize
     tokens = vectorizer_input.build_analyzer()(sentence)  # No wrapping
-    input_indices = [vectorizer_input.vocabulary_['ddd']] + [vectorizer_input.vocabulary_.get(token, vectorizer_input.vocabulary_['WhatisThisWordNeverSeenItBefore']) for token in tokens] + [vectorizer_input.vocabulary_['fff']] + [vectorizer_input.vocabulary_['PPPading']] * (max_len_input - len(tokens) - 2)
+    print(f"Tokens: {tokens}")  # Debug
+    print(f"Token indices: {[vectorizer_input.vocabulary_.get(token) for token in tokens]}")  # Debug
+    
+    input_indices = [vectorizer_input.vocabulary_['ddd']] + [vectorizer_input.vocabulary_.get(token, vectorizer_input.vocabulary_['PPPading']) for token in tokens] + [vectorizer_input.vocabulary_['fff']] + [vectorizer_input.vocabulary_['PPPading']] * (max_len_input - len(tokens) - 2)
+    print(f"Input indices: {input_indices}")  # Debug
+    # traduction of the input indices through reverse vocab (for debugging)
+    inv_vocab_input = {v: k for k, v in vectorizer_input.vocabulary_.items()}
+    reconstructed_sentence = ' '.join([inv_vocab_input[idx] for idx in input_indices if idx in inv_vocab_input])
+    print(f"Reconstructed sentence from indices: {reconstructed_sentence}")  # Debug
     if len(input_indices) > max_len_input:
         input_indices = input_indices[:max_len_input]
     input_tensor = torch.LongTensor(input_indices).unsqueeze(0).to(device)  
