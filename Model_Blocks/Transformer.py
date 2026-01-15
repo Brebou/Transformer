@@ -48,5 +48,6 @@ class Transformer(nn.Module):
         
         output = self.output_layer(decoder_output)
         output = self.dropout(output)
+        output = decoder_output @ self.embedding_output.weight.t()
 
         return output
