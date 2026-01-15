@@ -37,7 +37,7 @@ class DecoderBlock(nn.Module):
         cross_attention_mask = None
         ):
         # Self-Attention
-        self_attention_mask = create_mask(x.size(1)).to(x.device) 
+        self_attention_mask = create_mask(x.size(1)).to(x.device) #Triangle mask for self-attention, to not see future tokens
         self_attention_part = self.self_attention(self.norm1(x), mask=self_attention_mask)
         self_attention_part = self.dropout1(self_attention_part)
         x = x + self_attention_part  # First residual connection

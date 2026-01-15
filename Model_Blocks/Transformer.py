@@ -31,7 +31,7 @@ class Transformer(nn.Module):
         self.embedding_input = nn.Embedding(length_vocab_entry, embedding_size)
         self.embedding_output = nn.Embedding(length_vocab_target, embedding_size)
         self.output_layer = nn.Linear(embedding_size, length_vocab_target)
-        self.dropout = nn.Dropout(dropout_rate)
+        self.dropout = nn.Dropout(dropout_rate) # Adding dropout because why not
 
     def forward(self,
         x,
@@ -48,6 +48,6 @@ class Transformer(nn.Module):
         
         output = self.output_layer(decoder_output)
         output = self.dropout(output)
-        output = decoder_output @ self.embedding_output.weight.t()
+        output = decoder_output @ self.embedding_output.weight.t()  #reversing embedding
 
         return output

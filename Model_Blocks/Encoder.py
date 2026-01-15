@@ -7,7 +7,7 @@ class EncoderBlock(nn.Module):
             head_input_dim,
             head_size,
             head_output_dim,
-            embedding_size = 512,
+            embedding_size = 128,
             dropout_rate = 0.1
             ):
         super().__init__()

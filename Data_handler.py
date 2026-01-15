@@ -3,7 +3,7 @@ import pandas as pd
 from sklearn.feature_extraction.text import CountVectorizer
 from torch.utils.data import DataLoader, TensorDataset
 
-def prepare_data():
+def prepare_data(): # Could be adapted to other datasets
     df = pd.read_csv('tatoeba/eng-fra.txt', sep='\t', names=('en', 'fr'))
     df['sample_fr'] = df.apply(lambda row: f"ddd {row['fr']} fff", axis=1)
     df['sample_en'] = df.apply(lambda row: f"ddd {row['en']} fff", axis=1)
@@ -45,13 +45,12 @@ class VocabDataset(TensorDataset):
     def __getitem__(self, idx):
         tokens_fr = self.df.loc[idx, 'tokens_fr']
         tokens_en = self.df.loc[idx, 'tokens_en']
-        tokens_fr = tokens_fr + [self.padding_fr] * (self.max_len_fr - len(tokens_fr))
+        tokens_fr = tokens_fr + [self.padding_fr] * (self.max_len_fr - len(tokens_fr)) # Padding till max length
         tokens_en = tokens_en + [self.padding_en] * (self.max_len_en - len(tokens_en))
 
         return torch.tensor(tokens_en, dtype=torch.long), torch.tensor(tokens_fr, dtype=torch.long)
 
 def untokenize(tensor, vec):
-    # input is embedded tensor
     inv_vocab = {v: k for k, v in vec.vocabulary_.items()}
     sentences = []
     for seq in tensor:

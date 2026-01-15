@@ -31,8 +31,9 @@ def train_model(model,
         for i, (x, y) in enumerate(train_loader):
             x, y = x.to(device), y.to(device)
 
+            # Pretty straightforward training loop, no real surprises here
             optimizer.zero_grad()
-            mask = (x == padding_en).unsqueeze(1)  # (batch, 1, seq_len)
+            mask = (x == padding_en).unsqueeze(1) 
             mask = mask.float().masked_fill(mask == 1, float('-inf'))
             non_padding_fr = (y[:, :-1] != padding_fr)
         
@@ -61,7 +62,7 @@ def train_model(model,
         with torch.no_grad():
             for i, (x, y) in enumerate(test_loader):
                 x, y = x.to(device), y.to(device)
-                mask = (x == padding_en).unsqueeze(1)  # (batch, 1, seq_len)
+                mask = (x == padding_en).unsqueeze(1) 
                 mask = mask.float().masked_fill(mask == 1, float('-inf'))
                 non_padding_fr = (y[:, :-1] != padding_fr)
                 output = model(x, y[:, :-1], mask_input=mask)  

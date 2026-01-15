@@ -27,7 +27,7 @@ class Head(nn.Module):  # Cross-Attention Head if y is not None else Self-Attent
         attention_scores = q @ k.transpose(1,2)* self.head_size**-0.5
     
         if mask is not None:
-            attention_scores = attention_scores + mask
+            attention_scores = attention_scores + mask  # Applying the mask (if any)
     
         attention_weights = F.softmax(attention_scores, dim=-1)
     
