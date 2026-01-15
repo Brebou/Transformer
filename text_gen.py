@@ -1,4 +1,4 @@
-import Transformer as tfm
+import Model_Blocks.Transformer as tfm
 import torch
 from Data_handler import untokenize
 
