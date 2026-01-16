@@ -3,6 +3,7 @@ import Model_Blocks.Decoder as dec
 import torch.nn as nn
 import torch
 
+
 def positional_encoding(context_size, embedding_size):
     pe = torch.zeros(context_size, embedding_size)
     position = torch.arange(0, context_size, dtype=torch.float).unsqueeze(1)
@@ -12,22 +13,22 @@ def positional_encoding(context_size, embedding_size):
     pe = pe.unsqueeze(0)  
     return pe
 
+
 class Transformer(nn.Module):
     def __init__(self,
         length_vocab_entry,
         length_vocab_target,
         embedding_size = 128,
-        dropout_rate = 0.1,
+        dropout_rate = 0.2,
         head_size = 64,
-        num_heads = 4,
+        num_heads = 12,
         n_encoder_blocks = 4,
         n_decoder_blocks = 4,
-        max_context_size = 64
         ):
         super().__init__()
         self.encoder = enc.Encoder(num_heads, embedding_size, head_size, embedding_size//num_heads, dropout_rate, n_encoder_blocks)
         self.decoder = dec.Decoder(num_heads, embedding_size, head_size, dropout_rate, n_decoder_blocks)   
-        self.positional_encoding = positional_encoding(max_context_size, embedding_size)
+        self.positional_encoding = positional_encoding(head_size, embedding_size)
         self.embedding_input = nn.Embedding(length_vocab_entry, embedding_size)
         self.embedding_output = nn.Embedding(length_vocab_target, embedding_size)
         self.output_layer = nn.Linear(embedding_size, length_vocab_target)

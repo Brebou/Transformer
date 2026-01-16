@@ -4,6 +4,7 @@ from Data_handler import untokenize
 
 def translate_sentence(model, vectorizer_input, vectorizer_output, sentence,max_len_gen,max_len_input,device):
     model.eval()
+    model.to(device)
     # using vec to tokenize
     tokens = vectorizer_input.build_analyzer()(sentence) 
     input_indices = [vectorizer_input.vocabulary_['ddd']] + [vectorizer_input.vocabulary_.get(token, vectorizer_input.vocabulary_['PPPading']) for token in tokens] + [vectorizer_input.vocabulary_['fff']] + [vectorizer_input.vocabulary_['PPPading']] * (max_len_input - len(tokens) - 2)
